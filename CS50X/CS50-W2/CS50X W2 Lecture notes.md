@@ -348,3 +348,98 @@ int main(void)
     printf("\n");
 }
 ```
+
+- With the `ctype.h` library, we get the following functions:
+	- `islower`, which checks if a character input is lowercase and returns "non-zero" if lowercase or 0 itself if not lowercase
+	- toupper, which checks if a character input is uppercase: if it is, it doesn't "do" anything, but if it is lowercase, it changes it to uppercase
+	  
+- Code example applying `strlen` + `islower` + `toupper` library functions:
+```C
+#include <cs50.h>
+#include <ctype.h>
+#include <stdio.h>
+#include <string.h>
+
+int main(void)
+{
+    string s = get_string("Before: ");
+    printf("After:  ");
+	//  for (int i = 0; i < strlen(s); i++)
+	// This "for" loop can be refactored like this:
+	for (int i = 0, n = strlen(s); i < n; i++)
+    {
+        if (islower(s[i]))
+        {
+            printf("%c", toupper(s[i]));
+        }
+        else
+        {
+            printf("%c", s[i]);
+        }
+    }
+    printf("\n");
+}
+```
+
+#### Command line arguments
+- To allow our program to take CLI input as an option, we need to change the `void` statement on the `int main(void)` function:
+```C
+int main(int argc, string argv[])
+```
+- In this line:
+	- `argc`  = "argument count", or the count of how many arguments the user has input to the program
+	- `argv`  = "argument value", or the value that is on a certain position in the string array
+
+- Greeting program example: It changes based on the CLI argument inputted
+```C
+#include <cs50.h>
+#include <stdio.h>
+
+int main(int argc, string argv[])
+{
+    // Single-argument printout
+    // printf("hello, %s\n", argv[1]);
+
+    // Double-argument printout
+    // printf("hello, %s %s\n", argv[1], argv[2]);
+
+	// If we input
+    if (argc == 2)
+    {
+        printf("hello, %s\n", argv[1]);
+    }
+    else
+    {
+        printf("hello, world\n");
+    }
+}
+```
+
+- If we changed the `argv[1]` value from 1 to 0,  it would return the executable's own name, as it is the 0 / base argument in the command
+- `argc` carries the count (1 = base, 2 = one argum, so on) of the command arguments, and allows the code to behave in certain ways when it has a certain number of arguments
+
+
+### Defining a main function
+- Now, we have 2 ways of defining the main function in our C programs:
+```C
+#include <stdio.h>
+
+// The void / no-args way:
+int main(void)
+{
+	// code goes here
+}
+
+// The CLI argument / input args way:
+int main(int argc, string argv[])
+```
+- We append `[]` to the end of `argv` to be able to manipulate the input commands / string array that is generated from user input
+
+### Exit status
+- Both programs and functions, during or right after executions, produce / return #exit_status codes, generally integers, to indicate success or errors in the execution.
+- We can specify inside of the main function, for example, an execution branch, a return value for said branch (1 for incorrect execution, for example).
+
+
+### Cryptography
+- Cipher functions work in a similar way to regular code functions, with the difference that they take in plaintext (and optionally a key), and output ciphertext, which is text that has been ciphered, making it complicated, hard, or even impossible to understand, by the means of encryption.
+- Decryption in some cases is possible, if the input & algorithm are available, but it is generally the hardest step in cryptography.
